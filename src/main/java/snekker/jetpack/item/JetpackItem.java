@@ -18,8 +18,13 @@ public class JetpackItem extends Item {
     }
 
     public static void setActive(ItemStack stack, boolean active) {
-        stack.set(JetpackComponents.JETPACK_ACTIVE, active);
+        if (active) {
+            stack.set(JetpackComponents.JETPACK_ACTIVE, true);
+        }
+        else {
+            stack.set(JetpackComponents.JETPACK_ACTIVE, null);
+        }
     }
 
-    
+
 }

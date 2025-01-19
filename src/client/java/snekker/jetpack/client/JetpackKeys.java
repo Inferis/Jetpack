@@ -5,9 +5,11 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.MovementType;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import snekker.jetpack.Jetpack;
 import snekker.jetpack.item.JetpackItem;
@@ -42,8 +44,14 @@ public class JetpackKeys {
                         Jetpack.LOGGER.info("active(client)=" + active);
                         player.getAbilities().allowFlying = active;
                         player.getAbilities().flying = active;
-                        if (active) {
-                            player.move(MovementType.PLAYER, new Vec3d(0, 0.5, 0));
+                        var inAir = false;
+                        if (client.world != null) {
+                            var pos = player.getBlockPos().offset(Direction.DOWN, 1);
+                            var blockState = client.world.getBlockState(pos);
+                            inAir = blockState.getBlock() == Blocks.AIR;
+                        }
+                        if (!inAir && active) {
+                            player.move(MovementType.PLAYER, new Vec3d(0, 1.0, 0));
                         }
                         if (ClientPlayNetworking.canSend(SetJetpackActivePayload.ID)) {
                             ClientPlayNetworking.send(new SetJetpackActivePayload(active));
