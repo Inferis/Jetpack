@@ -35,7 +35,7 @@ public class JetpackKeys {
             var pressed = toggleBinding.wasPressed();
             if (pressed) {
                 var player = client.player;
-                if (player != null) {
+                if (player != null && !player.isSpectator() && !player.isInCreativeMode()) {
                     var jetpackStack = JetpackItem.getEquippedJetpack(player);
                     if (!jetpackStack.isEmpty()) {
                         JetpackItem.toggleActive(jetpackStack);
