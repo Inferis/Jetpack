@@ -5,6 +5,8 @@ import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import snekker.jetpack.item.JetpackItems;
+import snekker.jetpack.item.component.JetpackComponents;
+import snekker.jetpack.networking.JetpackNetworking;
 
 public class Jetpack implements ModInitializer {
     public static final String MODID = "jetpack";
@@ -17,5 +19,7 @@ public class Jetpack implements ModInitializer {
     @Override
     public void onInitialize() {
         JetpackItems.registerItems();
+        JetpackComponents.registerComponents();
+        JetpackNetworking.registerPayloads();
     }
 }
