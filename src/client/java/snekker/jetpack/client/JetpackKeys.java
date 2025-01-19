@@ -11,9 +11,8 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.MovementType;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import snekker.jetpack.Jetpack;
 import snekker.jetpack.item.JetpackItem;
-import snekker.jetpack.networking.SetJetpackActivePayload;
+import snekker.jetpack.networking.SetJetpackActiveC2SPayload;
 import snekker.jetpack.util.JetpackUtil;
 
 @Environment(EnvType.CLIENT)
@@ -37,13 +36,11 @@ public class JetpackKeys {
             if (pressed) {
                 var player = client.player;
                 if (player != null) {
-                    var jetpackStack = JetpackUtil.getEquippedJetpack(player);
+                    var jetpackStack = JetpackItem.getEquippedJetpack(player);
                     if (!jetpackStack.isEmpty()) {
                         JetpackItem.toggleActive(jetpackStack);
                         var active = JetpackItem.getActive(jetpackStack);
-                        Jetpack.LOGGER.info("active(client)=" + active);
-                        player.getAbilities().allowFlying = active;
-                        player.getAbilities().flying = active;
+                        JetpackUtil.setFlying(player, active);
                         var inAir = false;
                         if (client.world != null) {
                             var pos = player.getBlockPos().offset(Direction.DOWN, 1);
@@ -53,8 +50,8 @@ public class JetpackKeys {
                         if (!inAir && active) {
                             player.move(MovementType.PLAYER, new Vec3d(0, 1.0, 0));
                         }
-                        if (ClientPlayNetworking.canSend(SetJetpackActivePayload.ID)) {
-                            ClientPlayNetworking.send(new SetJetpackActivePayload(active));
+                        if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
+                            ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(active));
                         }
                     }
                 }

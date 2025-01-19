@@ -1,5 +1,6 @@
 package snekker.jetpack.item;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import snekker.jetpack.item.component.JetpackComponents;
@@ -26,5 +27,13 @@ public class JetpackItem extends Item {
         }
     }
 
-
+    public static ItemStack getEquippedJetpack(PlayerEntity player) {
+        var chest = player.getInventory().armor.get(2);
+        if (chest.getItem() instanceof JetpackItem) {
+            return chest;
+        }
+        else {
+            return ItemStack.EMPTY;
+        }
+    }
 }
