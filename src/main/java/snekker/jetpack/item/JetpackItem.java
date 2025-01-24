@@ -12,7 +12,6 @@ import net.minecraft.util.Util;
 import snekker.jetpack.item.component.JetpackComponents;
 
 import java.util.EnumMap;
-import java.util.Map;
 
 public class JetpackItem extends ArmorItem {
     static RegistryKey<EquipmentAsset> JETPACK_EQUIPMENT_ASSET_KEY = EquipmentAssetKeys.register("jetpack");

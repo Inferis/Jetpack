@@ -2,13 +2,7 @@ package snekker.jetpack.client.event;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.particle.EntityEffectParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
-import snekker.jetpack.Jetpack;
 import snekker.jetpack.item.JetpackItem;
 import snekker.jetpack.util.JetpackUtil;
 

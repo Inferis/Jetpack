@@ -12,7 +12,6 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.MovementType;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import snekker.jetpack.Jetpack;
 import snekker.jetpack.item.JetpackItem;
 import snekker.jetpack.networking.SetJetpackActiveC2SPayload;
 import snekker.jetpack.util.JetpackUtil;

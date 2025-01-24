@@ -5,12 +5,10 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.model.TexturedModelData;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.EntityModels;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import snekker.jetpack.Jetpack;
 import snekker.jetpack.client.model.JetpackEntityModel;
 import snekker.jetpack.client.model.JetpackEntityModelLayer;
 
