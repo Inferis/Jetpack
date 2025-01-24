@@ -5,6 +5,7 @@ import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import snekker.jetpack.item.JetpackItems;
+import snekker.jetpack.event.JetpackServerEvents;
 import snekker.jetpack.item.component.JetpackComponents;
 import snekker.jetpack.networking.JetpackNetworking;
 
@@ -21,5 +22,6 @@ public class Jetpack implements ModInitializer {
         JetpackItems.registerItems();
         JetpackComponents.registerComponents();
         JetpackNetworking.registerPayloads();
+        JetpackServerEvents.registerServerEvents();
     }
 }

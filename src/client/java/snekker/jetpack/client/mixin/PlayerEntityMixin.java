@@ -18,12 +18,11 @@ public class PlayerEntityMixin {
         var playerEntity = (PlayerEntity)(Object)this;
         if (loaded && playerEntity instanceof ClientPlayerEntity clientPlayerEntity) {
             var jetpackStack = JetpackItem.getEquippedJetpack(clientPlayerEntity);
-            if (!jetpackStack.isEmpty() && JetpackItem.getActive(jetpackStack)) {
+            if (!jetpackStack.isEmpty() && JetpackItem.getActive(jetpackStack) && !playerEntity.isOnGround()) {
                 JetpackUtil.setFlying(clientPlayerEntity, true);
-            }
-
-            if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
-                ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(true));
+                if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
+                    ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(true));
+                }
             }
         }
     }
