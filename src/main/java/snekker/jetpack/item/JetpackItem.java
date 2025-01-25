@@ -50,7 +50,6 @@ public class JetpackItem extends ArmorItem {
 
     public int getItemBarStep(ItemStack stack) {
         var fuel = stack.get(JETPACK_FUEL);
-        Jetpack.LOGGER.info("fuel step = " + fuel);
         return MathHelper.clamp((int)Math.ceil((float)fuel * 13.0F / 5000.0F), 0, 13);
     }
 
