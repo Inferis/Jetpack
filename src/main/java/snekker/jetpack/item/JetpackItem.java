@@ -49,7 +49,7 @@ public class JetpackItem extends ArmorItem {
     }
 
     public int getItemBarStep(ItemStack stack) {
-        var fuel = stack.get(JETPACK_FUEL);
+        var fuel = stack.getOrDefault(JETPACK_FUEL, 0);
         return MathHelper.clamp((int)Math.ceil((float)fuel * 13.0F / 5000.0F), 0, 13);
     }
 
@@ -58,14 +58,14 @@ public class JetpackItem extends ArmorItem {
     }
 
     public boolean isItemBarVisible(ItemStack stack) {
-        var fuel = stack.get(JETPACK_FUEL);
+        var fuel = stack.getOrDefault(JETPACK_FUEL, 0);
         return fuel < 5000;
     }
 
         @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
-        tooltip.add(Text.literal("Fuel: " + stack.get(JETPACK_FUEL) + " of 5000"));
+        tooltip.add(Text.literal("Fuel: " + stack.getOrDefault(JETPACK_FUEL, 0) + " of 5000"));
     }
 
     public static void toggleActive(ItemStack stack) {
@@ -96,7 +96,7 @@ public class JetpackItem extends ArmorItem {
     }
 
     public static Optional<Integer> consumeFuel(ItemStack jetpackStack) {
-        var fuel = jetpackStack.get(JetpackItem.JETPACK_FUEL);
+        var fuel = jetpackStack.getOrDefault(JetpackItem.JETPACK_FUEL, 0);
         if (fuel > 0) {
             fuel -= 1;
             jetpackStack.set(JetpackItem.JETPACK_FUEL, fuel);
