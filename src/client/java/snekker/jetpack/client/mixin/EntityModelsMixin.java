@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import snekker.jetpack.client.model.JetpackEntityModel;
-import snekker.jetpack.client.model.JetpackEntityModelLayer;
 
 import java.util.Map;
 
@@ -18,7 +17,7 @@ import java.util.Map;
 public class EntityModelsMixin {
     @Inject(at= @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/client/render/entity/model/SalmonEntityModel;getTexturedModelData()Lnet/minecraft/client/model/TexturedModelData;"), method="getModels")
     private static void getModels(CallbackInfoReturnable<Map<EntityModelLayer, TexturedModelData>> info, @Local ImmutableMap.Builder<EntityModelLayer, TexturedModelData> builder) {
-        var layer = JetpackEntityModelLayer.JETPACK;
+        var layer = JetpackEntityModel.JETPACK;
         builder.put(layer, JetpackEntityModel.getTexturedModelData());
     }
 }

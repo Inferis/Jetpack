@@ -2,9 +2,13 @@ package snekker.jetpack.client.model;
 
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
+import net.minecraft.util.Identifier;
 
 public class JetpackEntityModel<T extends PlayerEntityRenderState> extends BipedEntityModel<T> {
+    public static EntityModelLayer JETPACK = new EntityModelLayer(Identifier.of("jetpack"), "main");
+
     //private ModelPart jetpack;
     public JetpackEntityModel(ModelPart root) {
         super(root);

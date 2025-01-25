@@ -17,7 +17,7 @@ public class JetpackFeatureRenderer extends FeatureRenderer<PlayerEntityRenderSt
 
     public JetpackFeatureRenderer(FeatureRendererContext<PlayerEntityRenderState, PlayerEntityModel> context, LoadedEntityModels entityModels) {
         super(context);
-        this.model = new JetpackEntityModel(entityModels.getModelPart(JetpackEntityModelLayer.JETPACK));
+        this.model = new JetpackEntityModel(entityModels.getModelPart(JetpackEntityModel.JETPACK));
     }
 
     @Override
@@ -26,10 +26,8 @@ public class JetpackFeatureRenderer extends FeatureRenderer<PlayerEntityRenderSt
             matrices.push();
 
             var jetpackTexture = Jetpack.id("textures/entity/jetpack.png");
-            //var jetpackTexture = Identifier.ofVanilla("textures/block/stone.png");
-            var skinTexture = state.skinTextures.texture();
             var vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getEntitySolid(jetpackTexture));
-            ((PlayerEntityModel)this.getContextModel()).copyTransforms(this.model);
+            this.getContextModel().copyTransforms(this.model);
             this.model.setAngles(state);
             this.model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV);
 
