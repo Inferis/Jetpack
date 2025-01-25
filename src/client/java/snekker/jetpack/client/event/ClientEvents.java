@@ -11,7 +11,9 @@ import net.minecraft.text.Text;
 import snekker.jetpack.Jetpack;
 import snekker.jetpack.client.JetpackClient;
 import snekker.jetpack.item.JetpackItem;
+import snekker.jetpack.networking.SetJetpackActiveC2SPayload;
 import snekker.jetpack.networking.SetJetpackFuelC2SPayload;
+import snekker.jetpack.util.JetpackUtil;
 
 public class ClientEvents {
     public static void registerEvents() {
@@ -37,6 +39,12 @@ public class ClientEvents {
                 fuel.ifPresent(f -> ClientPlayNetworking.send(new SetJetpackFuelC2SPayload(f)));
 
                 if (!player.isOnGround()) {
+                    if (fuel.isPresent() && fuel.get() == 0) {
+                        JetpackItem.setActive(jetpackStack, false);
+                        JetpackUtil.setFlying(player,false);
+                        ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(false));
+                    }
+
                     // get vector that describes our rotation, then move it behind us to
                     // add cloud particles.
                     var vec = player.getRotationVector();

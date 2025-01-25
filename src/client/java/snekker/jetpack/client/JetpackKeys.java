@@ -48,7 +48,7 @@ public class JetpackKeys {
 
         if (client.player != null && !client.player.getAbilities().flying) {
             var jetpack = JetpackItem.getEquippedJetpack(client.player);
-            if (!jetpack.isEmpty()) {
+            if (!jetpack.isEmpty() && jetpack.getOrDefault(JetpackItem.JETPACK_FUEL, 0) > 0) {
                 if (powerBinding.isPressed()) {
                     JetpackItem.setActive(jetpack, true);
                     client.player.setVelocity(new Vec3d(0, 0.25, 0));
@@ -71,22 +71,16 @@ public class JetpackKeys {
         if (player != null && !player.isSpectator() && !player.isInCreativeMode()) {
             var jetpackStack = JetpackItem.getEquippedJetpack(player);
             if (!jetpackStack.isEmpty()) {
-                JetpackItem.toggleActive(jetpackStack);
-                var active = JetpackItem.getActive(jetpackStack);
-                JetpackUtil.setFlying(player, active);
-                //player.getAbilities().setFlySpeed(0.25f);
+                if (JetpackItem.getActive(jetpackStack) || jetpackStack.getOrDefault(JetpackItem.JETPACK_FUEL, 0) > 0) {
+                    JetpackItem.toggleActive(jetpackStack);
+                    var active = JetpackItem.getActive(jetpackStack);
+                    JetpackUtil.setFlying(player, active);
+                    //player.getAbilities().setFlySpeed(0.25f);
 
-                var inAir = false;
-                if (client.world != null) {
-                    var pos = player.getBlockPos().offset(Direction.DOWN, 1);
-                    var blockState = client.world.getBlockState(pos);
-                    inAir = blockState.getBlock() == Blocks.AIR;
-                }
-                if (!inAir && active) {
-                    player.setVelocity(new Vec3d(0, 0.5, 0));
-                }
+                    if (player.isOnGround() && active) {
+                        player.setVelocity(new Vec3d(0, 0.5, 0));
+                    }
 
-                if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
                     ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(active));
                 }
             }
