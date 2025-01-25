@@ -10,6 +10,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(LivingEntityRenderer.class)
 public interface ILivingEntityRendererInvoker<T extends LivingEntity, S extends LivingEntityRenderState, M extends EntityModel<? super S>> {
+    // For whatever reason, we can't use the same method
+    // name in the mixin method as the original method.
     @Invoker("addFeature")
-    boolean addFeatur(FeatureRenderer<S, M> feature);
+    boolean addFeature_mixin(FeatureRenderer<S, M> feature);
 }

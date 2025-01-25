@@ -14,7 +14,7 @@ public class PlayerEntityRendererMixin {
     public void init(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo info) {
         var invoker = (ILivingEntityRendererInvoker)this;
         var renderer = (PlayerEntityRenderer)(Object)this;
-        invoker.addFeatur(new JetpackFeatureRenderer(renderer, ctx.getEntityModels()));
+        invoker.addFeature_mixin(new JetpackFeatureRenderer(renderer, ctx.getEntityModels()));
     }
 }
 
