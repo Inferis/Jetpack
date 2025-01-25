@@ -9,7 +9,6 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.entity.MovementType;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import snekker.jetpack.item.JetpackItem;
@@ -46,15 +45,22 @@ public class JetpackKeys {
         if (toggleBinding.wasPressed()) {
             toggleJetpackActive(client);
         }
+
         if (client.player != null && !client.player.getAbilities().flying) {
             var jetpack = JetpackItem.getEquippedJetpack(client.player);
             if (!jetpack.isEmpty()) {
                 if (powerBinding.isPressed()) {
                     JetpackItem.setActive(jetpack, true);
                     client.player.setVelocity(new Vec3d(0, 0.25, 0));
+                    if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
+                        ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(true));
+                    }
                 }
-                else {
+                else if (JetpackItem.getActive(jetpack)) {
                     JetpackItem.setActive(jetpack, false);
+                    if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
+                        ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(false));
+                    }
                 }
             }
         }
@@ -68,7 +74,7 @@ public class JetpackKeys {
                 JetpackItem.toggleActive(jetpackStack);
                 var active = JetpackItem.getActive(jetpackStack);
                 JetpackUtil.setFlying(player, active);
-                player.getAbilities().setFlySpeed(0.5f);
+                //player.getAbilities().setFlySpeed(0.25f);
 
                 var inAir = false;
                 if (client.world != null) {
@@ -77,7 +83,7 @@ public class JetpackKeys {
                     inAir = blockState.getBlock() == Blocks.AIR;
                 }
                 if (!inAir && active) {
-                    player.move(MovementType.PLAYER, new Vec3d(0, 1.0, 0));
+                    player.setVelocity(new Vec3d(0, 0.5, 0));
                 }
 
                 if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {

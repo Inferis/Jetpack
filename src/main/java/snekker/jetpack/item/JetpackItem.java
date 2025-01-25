@@ -78,14 +78,11 @@ public class JetpackItem extends ArmorItem {
     }
 
     public static void setActive(ItemStack stack, boolean active) {
-        Jetpack.LOGGER.info("fuel1 = " + stack.get(JetpackItem.JETPACK_FUEL));
         if (active) {
             stack.set(JETPACK_ACTIVE, true);
-            Jetpack.LOGGER.info("fuel2 = " + stack.get(JetpackItem.JETPACK_FUEL));
         }
         else {
             stack.set(JETPACK_ACTIVE, null);
-            Jetpack.LOGGER.info("fuel3 = " + stack.get(JetpackItem.JETPACK_FUEL));
         }
     }
 
