@@ -26,7 +26,7 @@ public class JetpackItems {
 
     public static void registerItems() {
         JETPACK = registerItem("jetpack", key -> {
-            return new JetpackItem(new Item.Settings().maxCount(1).equippable(EquipmentSlot.CHEST).useItemPrefixedTranslationKey().registryKey(key));
+            return new JetpackItem(new Item.Settings().useItemPrefixedTranslationKey().registryKey(key));
         });
     }
 }

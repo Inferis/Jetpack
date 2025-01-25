@@ -1,10 +1,11 @@
 package snekker.jetpack.client.event;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.particle.ParticleTypes;
 import snekker.jetpack.item.JetpackItem;
-import snekker.jetpack.util.JetpackUtil;
+import snekker.jetpack.networking.SetJetpackFuelC2SPayload;
 
 public class ClientEvents {
     public static void registerEvents() {
@@ -25,10 +26,10 @@ public class ClientEvents {
 
             var jetpackStack = JetpackItem.getEquippedJetpack(player);
             if (!player.getAbilities().flying) {
-                if (player.isLoaded() && !jetpackStack.isEmpty()) {
-                    JetpackItem.setActive(jetpackStack, false);
-                    JetpackUtil.setFlying(player, false);
-                }
+//                if (player.isLoaded() && !jetpackStack.isEmpty()) {
+//                    JetpackItem.setActive(jetpackStack, false);
+//                    JetpackUtil.setFlying(player, false);
+//                }
                 // not flying, so no particles needed
                 return;
             }
@@ -41,6 +42,9 @@ public class ClientEvents {
                 var y = player.getY() + 0.5;
                 var z = player.getZ() - vec.getZ();
                 minecraftClient.world.addParticle(ParticleTypes.CLOUD, x, y, z, 0, -0.05, 0);
+
+                var fuel = JetpackItem.consumeFuel(jetpackStack);
+                fuel.ifPresent(f -> ClientPlayNetworking.send(new SetJetpackFuelC2SPayload(f)));
             }
         }
     }
