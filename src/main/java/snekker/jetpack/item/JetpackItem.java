@@ -104,7 +104,6 @@ public class JetpackItem extends ArmorItem {
         if (fuel > 0) {
             fuel -= 1;
             jetpackStack.set(JetpackItem.JETPACK_FUEL, fuel);
-            jetpackStack.setDamage(jetpackStack.getDamage());
             return Optional.of(fuel);
         }
         return Optional.empty();
