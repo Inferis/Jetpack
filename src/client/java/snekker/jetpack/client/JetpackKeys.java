@@ -51,7 +51,9 @@ public class JetpackKeys {
             if (!jetpack.isEmpty() && jetpack.getOrDefault(JetpackItem.JETPACK_FUEL, 0) > 0) {
                 if (powerBinding.isPressed()) {
                     JetpackItem.setActive(jetpack, true);
-                    client.player.setVelocity(new Vec3d(0, 0.25, 0));
+                    var vec = client.player.getRotationVector();
+                    vec = vec.add(0, 0.15, 0);
+                    client.player.setVelocity(vec);
                     if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
                         ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(true));
                     }
