@@ -19,6 +19,7 @@ import snekker.jetpack.util.JetpackUtil;
 @Environment(EnvType.CLIENT)
 public class JetpackKeys {
     private static KeyBinding toggleBinding;
+    private static KeyBinding powerBinding;
 
     public static void registerKeybinds() {
         registerToggleActiveKeybind();
@@ -31,14 +32,31 @@ public class JetpackKeys {
                 InputUtil.GLFW_KEY_J,
                 "jetpack.category.keys"
         ));
+        powerBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "jetpack.key.power",
+                InputUtil.Type.KEYSYM,
+                InputUtil.GLFW_KEY_K,
+                "jetpack.category.keys"
+        ));
 
-        ClientTickEvents.END_CLIENT_TICK.register(JetpackKeys::onEndTick);
+        ClientTickEvents.START_CLIENT_TICK.register(JetpackKeys::onClientTick);
     }
 
-    private static void onEndTick(MinecraftClient client) {
-        var pressed = toggleBinding.wasPressed();
-        if (pressed) {
+    private static void onClientTick(MinecraftClient client) {
+        if (toggleBinding.wasPressed()) {
             toggleJetpackActive(client);
+        }
+        if (client.player != null && !client.player.getAbilities().flying) {
+            var jetpack = JetpackItem.getEquippedJetpack(client.player);
+            if (!jetpack.isEmpty()) {
+                if (powerBinding.isPressed()) {
+                    JetpackItem.setActive(jetpack, true);
+                    client.player.setVelocity(new Vec3d(0, 0.25, 0));
+                }
+                else {
+                    JetpackItem.setActive(jetpack, false);
+                }
+            }
         }
     }
 
