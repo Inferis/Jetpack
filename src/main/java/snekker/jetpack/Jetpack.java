@@ -4,6 +4,8 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import snekker.jetpack.block.JetpackBlockEntityTypes;
+import snekker.jetpack.block.JetpackBlocks;
 import snekker.jetpack.item.JetpackItems;
 import snekker.jetpack.event.ServerEvents;
 import snekker.jetpack.networking.JetpackNetworking;
@@ -19,6 +21,8 @@ public class Jetpack implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        JetpackBlocks.registerBlocks();
+        JetpackBlockEntityTypes.registerBlockEntityTypes();
         JetpackItems.registerItems();
         JetpackNetworking.registerPayloads();
         ServerEvents.registerServerEvents();

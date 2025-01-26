@@ -1,9 +1,13 @@
 {
   "item.jetpack.jetpack": "Jetpack",
 
-  "jetpack.key.hover": "Hover",
-  "jetpack.key.fly": "Fly",
-  "jetpack.category.keys": "Jetpack",
+  "block.jetpack.recharger": "Recharger",
 
-  "tooltip.jetpack.fuel": "Fuel: %s of %s"
+  "key.jetpack.hover": "Hover",
+  "key.jetpack.fly": "Fly",
+  "category.jetpack.keys": "Jetpack",
+
+  "tooltip.jetpack.fuel": "Fuel: %s of %s",
+
+  "screen.jetpack.recharger.title": "Recharger"
 }

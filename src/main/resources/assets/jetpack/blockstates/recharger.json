@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "has_jetpack=false": {
+      "model": "jetpack:block/recharger"
+    },
+    "has_jetpack=true": {
+      "model": "jetpack:block/recharger_loaded"
+    }
+  }
+}

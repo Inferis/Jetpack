@@ -26,16 +26,16 @@ public class JetpackKeys {
 
     private static void registerToggleActiveKeybind() {
         toggleBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "jetpack.key.hover",
+                "key.jetpack.hover",
                 InputUtil.Type.KEYSYM,
                 InputUtil.GLFW_KEY_H,
-                "jetpack.category.keys"
+                "category.jetpack.keys"
         ));
         powerBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-                "jetpack.key.fly",
+                "key.jetpack.fly",
                 InputUtil.Type.KEYSYM,
                 InputUtil.GLFW_KEY_J,
-                "jetpack.category.keys"
+                "category.jetpack.keys"
         ));
 
         ClientTickEvents.START_CLIENT_TICK.register(JetpackKeys::onClientTick);
