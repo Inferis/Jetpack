@@ -51,8 +51,14 @@ public class JetpackKeys {
             if (!jetpack.isEmpty() && jetpack.getOrDefault(JetpackItem.JETPACK_FUEL, 0) > 0) {
                 if (powerBinding.isPressed()) {
                     JetpackItem.setActive(jetpack, true);
-                    var vec = client.player.getRotationVector();
-                    vec = vec.add(0, 0.15, 0);
+                    Vec3d vec;
+                    if (client.player.isOnGround()) {
+                        vec = new Vec3d(0, 0.25, 0);
+                    }
+                    else {
+                        vec = client.player.getRotationVector();
+                        vec = vec.add(-vec.x / 3.0 * 2.0, 0.15, -vec.z / 3.0 * 2.0);
+                    }
                     client.player.setVelocity(vec);
                     if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
                         ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(true));
