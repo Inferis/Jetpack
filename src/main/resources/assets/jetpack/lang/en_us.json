@@ -1,3 +1,9 @@
 {
-  "item.jetpack.jetpack": "Jetpack"
+  "item.jetpack.jetpack": "Jetpack",
+
+  "jetpack.key.hover": "Hover",
+  "jetpack.key.fly": "Fly",
+  "jetpack.category.keys": "Jetpack",
+
+  "tooltip.jetpack.fuel": "Fuel: %s of %s"
 }

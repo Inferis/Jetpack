@@ -65,7 +65,9 @@ public class JetpackItem extends ArmorItem {
         @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
-        tooltip.add(Text.literal("Fuel: " + stack.getOrDefault(JETPACK_FUEL, 0) + " of 5000"));
+
+        var text = Text.translatable("tooltip.jetpack.fuel", stack.getOrDefault(JETPACK_FUEL, 0), 5000);
+        tooltip.add(text);
     }
 
     public static void toggleActive(ItemStack stack) {
