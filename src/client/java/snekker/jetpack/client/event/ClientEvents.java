@@ -65,7 +65,7 @@ public class ClientEvents {
             var fuel = jetpack.getOrDefault(JetpackItem.JETPACK_FUEL, 0);
             drawContext.drawItem(jetpack, 8, drawContext.getScaledWindowHeight() / 2 - 8);
             if (JetpackItem.getActive(jetpack)) {
-                drawContext.drawText(client.textRenderer, Text.literal(fuel + "/5000"), 30, drawContext.getScaledWindowHeight() / 2 - client.textRenderer.fontHeight / 2, 0xffffff, true);
+                drawContext.drawText(client.textRenderer, Text.literal(fuel + "/" + JetpackItem.MAX_FUEL), 30, drawContext.getScaledWindowHeight() / 2 - client.textRenderer.fontHeight / 2, 0xffffff, true);
             }
         }
     }

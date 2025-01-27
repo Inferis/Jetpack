@@ -5,28 +5,35 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.ArrayPropertyDelegate;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import snekker.jetpack.item.JetpackItems;
 
 public class RechargerScreenHandler extends ScreenHandler {
     private final World world;
     private final Inventory inventory;
+    private final PropertyDelegate propertyDelegate;
 
     public RechargerScreenHandler(int syncId, PlayerInventory playerInventory) {
-        this(syncId, playerInventory, new SimpleInventory(2));
+        this(syncId, playerInventory, new SimpleInventory(2), new ArrayPropertyDelegate(4));
     }
 
-    public RechargerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory) {
+    public RechargerScreenHandler(int syncId, PlayerInventory playerInventory, Inventory inventory, PropertyDelegate propertyDelegate) {
         super(JetpackScreens.RECHARGER, syncId);
 
+        this.propertyDelegate = propertyDelegate;
         this.world = playerInventory.player.getWorld();
         this.inventory = inventory;
 
         addSlot(new JetpackSlot(inventory, 0, 84, 25));
         addSlot(new FuelSlot(this, inventory, 1, 105, 53));
         addPlayerSlots(playerInventory, 8, 84);
+
+        addProperties(propertyDelegate);
     }
 
     @Override
@@ -77,6 +84,18 @@ public class RechargerScreenHandler extends ScreenHandler {
     }
 
     public float getChargeProgress() {
-        return 0.5F;
+        return ((float)propertyDelegate.get(1) - propertyDelegate.get(0)) / propertyDelegate.get(1);
+    }
+
+    public Text getJetpackFuelStat() {
+        return Text.literal("" + propertyDelegate.get(2)).withColor(0x373737)
+                .append(Text.literal("/").withColor(0x0))
+                .append(Text.literal("" + propertyDelegate.get(3)));
+    }
+
+    public Text getFuelStat() {
+        return Text.literal("" + propertyDelegate.get(0)).withColor(0x0096ff)
+                .append(Text.literal("/").withColor(0x0))
+                .append(Text.literal("" + propertyDelegate.get(1)));
     }
 }

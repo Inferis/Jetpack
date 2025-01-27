@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class JetpackItem extends ArmorItem {
+    public static final Integer MAX_FUEL = 5000;
     static RegistryKey<EquipmentAsset> JETPACK_EQUIPMENT_ASSET_KEY = EquipmentAssetKeys.register("jetpack");
     static ArmorMaterial JETPACK_MATERIAL = new ArmorMaterial(15, Util.make(new EnumMap(EquipmentType.class), (map) -> {
         map.put(EquipmentType.CHESTPLATE, 1);
@@ -44,13 +45,13 @@ public class JetpackItem extends ArmorItem {
         super(JETPACK_MATERIAL, EquipmentType.CHESTPLATE, settings
                 .maxCount(1)
                 .equippable(EquipmentSlot.CHEST)
-                .component(JETPACK_FUEL, 5000)
+                .component(JETPACK_FUEL, MAX_FUEL)
         );
     }
 
     public int getItemBarStep(ItemStack stack) {
         var fuel = stack.getOrDefault(JETPACK_FUEL, 0);
-        return MathHelper.clamp((int)Math.ceil((float)fuel * 13.0F / 5000.0F), 0, 13);
+        return MathHelper.clamp((int)Math.ceil((float)fuel * 13.0F / MAX_FUEL), 0, 13);
     }
 
     public int getItemBarColor(ItemStack stack) {
@@ -59,14 +60,14 @@ public class JetpackItem extends ArmorItem {
 
     public boolean isItemBarVisible(ItemStack stack) {
         var fuel = stack.getOrDefault(JETPACK_FUEL, 0);
-        return fuel < 5000;
+        return fuel < MAX_FUEL;
     }
 
         @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
 
-        var text = Text.translatable("tooltip.jetpack.fuel", stack.getOrDefault(JETPACK_FUEL, 0), 5000);
+        var text = Text.translatable("tooltip.jetpack.fuel", stack.getOrDefault(JETPACK_FUEL, 0), MAX_FUEL);
         tooltip.add(text);
     }
 

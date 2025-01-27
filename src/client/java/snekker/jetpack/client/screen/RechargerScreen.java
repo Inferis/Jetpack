@@ -40,4 +40,17 @@ public class RechargerScreen extends HandledScreen<RechargerScreenHandler> {
             context.drawGuiTexture(RenderLayer::getGuiTextured, CHARGE_PROGRESS_TEXTURE, 14, 14, 0, 14 - progress, originX + 82, originY + 56 + 14 - progress, 14, progress);
         }
     }
+
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
+
+        var text = handler.getJetpackFuelStat();
+        var width = getTextRenderer().getWidth(text);
+        context.drawText(getTextRenderer(), text, originX + 76- width, originY + 29, 0, false);
+
+//        text = handler.getFuelStat();
+//        width = getTextRenderer().getWidth(text);
+//        context.drawText(getTextRenderer(), text, originX + 76 - width, originY + 35, 0, false);
+    }
 }
