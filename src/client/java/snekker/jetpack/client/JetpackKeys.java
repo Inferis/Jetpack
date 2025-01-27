@@ -53,7 +53,7 @@ public class JetpackKeys {
                     JetpackItem.setActive(jetpack, true);
                     Vec3d vec;
                     if (client.player.isOnGround()) {
-                        vec = new Vec3d(0, 0.25, 0);
+                        vec = new Vec3d(0, 0.5, 0);
                     }
                     else {
                         vec = client.player.getRotationVector();
