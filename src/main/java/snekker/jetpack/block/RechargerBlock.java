@@ -58,8 +58,6 @@ public class RechargerBlock extends Block implements BlockEntityProvider, BlockE
             player.openHandledScreen(rechargerBlockEntity);
         }
 
-        world.setBlockState(pos, state.with(HAS_JETPACK, true));
-
         return ActionResult.SUCCESS;
     }
 

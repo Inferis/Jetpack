@@ -21,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import snekker.jetpack.item.JetpackItem;
+import snekker.jetpack.item.JetpackItems;
 import snekker.jetpack.screen.RechargerScreenHandler;
 
 public class RechargerBlockEntity extends BlockEntity implements @Nullable NamedScreenHandlerFactory, InventoryChangedListener {
@@ -146,6 +147,11 @@ public class RechargerBlockEntity extends BlockEntity implements @Nullable Named
 
     @Override
     public void onInventoryChanged(Inventory sender) {
+        if (world != null) {
+            var hasJetpack = sender.getStack(0).isOf(JetpackItems.JETPACK);
+            world.setBlockState(pos, world.getBlockState(pos)
+                    .with(RechargerBlock.HAS_JETPACK, hasJetpack));
+        }
         markDirty();
     }
 }

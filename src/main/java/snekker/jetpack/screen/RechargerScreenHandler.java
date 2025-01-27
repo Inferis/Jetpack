@@ -47,26 +47,33 @@ public class RechargerScreenHandler extends ScreenHandler {
             if (slot.getStack().isOf(JetpackItems.JETPACK)) {
                 if (slotIndex == 0) {
                     // going from jetpack slot to inventory
-                    insertItem(slotStack, 2, 38, false);
-                    return ItemStack.EMPTY;
+                    if (!insertItem(slotStack, 2, 38, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                    slot.markDirty();
                 }
                 else if (!jetpackSlot.hasStack()) {
                     // going from inventory to jetpack slot
-                    insertItem(slotStack, 0, 1, false);
-                    return ItemStack.EMPTY;
+                    if (!insertItem(slotStack, 0, 1, false)) {
+                        return ItemStack.EMPTY;
+                    }
                 }
             }
             else if (slotIndex == 1) {
                 // going from fuel slot to inventory
-                insertItem(slotStack, 2, 38, false);
-                return ItemStack.EMPTY;
+                if (!insertItem(slotStack, 2, 38, false)) {
+                    return ItemStack.EMPTY;
+                }
+                slot.markDirty();
             }
             else if (isFuel(slot.getStack()) && !fuelSlot.hasStack()) {
                 // going from inventory to fuel slot
-                insertItem(slotStack, 1, 2, false);
-                return ItemStack.EMPTY;
+                if (!insertItem(slotStack, 1, 2, false)) {
+                    return ItemStack.EMPTY;
+                }
             }
         }
+
         return itemStack;
     }
 
