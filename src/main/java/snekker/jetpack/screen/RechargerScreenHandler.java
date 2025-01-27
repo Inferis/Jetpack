@@ -87,7 +87,7 @@ public class RechargerScreenHandler extends ScreenHandler {
     }
 
     public boolean isCharging() {
-        return true;
+        return getChargeProgress() > 0;
     }
 
     public float getChargeProgress() {

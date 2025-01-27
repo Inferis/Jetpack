@@ -7,12 +7,14 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 import snekker.jetpack.Jetpack;
 import snekker.jetpack.screen.RechargerScreenHandler;
 
 public class RechargerScreen extends HandledScreen<RechargerScreenHandler> {
     public static final Identifier BACKGROUND_TEXTURE = Jetpack.id("textures/gui/container/recharger.png");
     public static final Identifier CHARGE_PROGRESS_TEXTURE = Jetpack.id("container/recharger/charge_progress");
+    public static final Identifier SPARKLES_TEXTURE = Jetpack.id("container/recharger/sparkles");
 
     public RechargerScreen(RechargerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -20,6 +22,7 @@ public class RechargerScreen extends HandledScreen<RechargerScreenHandler> {
 
     private int originX;
     private int originY;
+    private int sparkles;
 
     @Override
     protected void init() {
@@ -27,6 +30,8 @@ public class RechargerScreen extends HandledScreen<RechargerScreenHandler> {
 
         originX = (width - backgroundWidth) / 2;
         originY = (height - backgroundHeight) / 2;
+
+        sparkles = 0;
     }
 
     @Override
@@ -35,6 +40,11 @@ public class RechargerScreen extends HandledScreen<RechargerScreenHandler> {
         if (handler.isCharging()) {
             int progress = MathHelper.ceil(this.handler.getChargeProgress() * 13.0F) + 1;
             context.drawGuiTexture(RenderLayer::getGuiTextured, CHARGE_PROGRESS_TEXTURE, 14, 14, 0, 14 - progress, originX + 82, originY + 56 + 14 - progress, 14, progress);
+            sparkles = sparkles + 1;
+            if (sparkles > 199) {
+                sparkles = 0;
+            }
+            context.drawGuiTexture(RenderLayer::getGuiTextured, SPARKLES_TEXTURE, 24, 120, 0, (int)Math.floor(sparkles / 40.0) * 24, originX + 80, originY + 21, 24, 24);
         }
     }
 
