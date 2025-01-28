@@ -138,9 +138,9 @@ public class RechargerBlockEntity extends BlockEntity implements @Nullable Named
         }
 
         if (fuelLeft > 0) {
-            fuel += 1;
+            fuel = Math.clamp(fuel + 2, 0, JetpackItem.MAX_FUEL);
             jetpackStack.set(JetpackItem.JETPACK_FUEL, fuel);
-            fuelLeft = Math.clamp(fuelLeft - 1, 0, fuelLeft);
+            fuelLeft = Math.clamp(fuelLeft - 5, 0, fuelLeft);
             markDirty();
         }
     }
