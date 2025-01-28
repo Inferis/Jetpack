@@ -6,6 +6,7 @@
   "client": [
     "EntityModelsMixin",
     "ILivingEntityRendererInvoker",
+    "KeyBindingMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "PlayerEntityRendererMixin"

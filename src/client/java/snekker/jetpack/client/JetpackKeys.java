@@ -9,6 +9,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import snekker.jetpack.item.JetpackItem;
@@ -19,6 +20,7 @@ import snekker.jetpack.util.JetpackUtil;
 public class JetpackKeys {
     private static KeyBinding toggleBinding;
     private static KeyBinding powerBinding;
+    private static KeyBinding spaceBinding;
 
     public static void registerKeybinds() {
         registerToggleActiveKeybind();
@@ -37,11 +39,21 @@ public class JetpackKeys {
                 InputUtil.GLFW_KEY_J,
                 "category.jetpack.keys"
         ));
+        spaceBinding = KeyBindingRegistry.register(new KeyBinding(
+                "key.jetpack.test",
+                InputUtil.Type.KEYSYM,
+                InputUtil.GLFW_KEY_SPACE,
+                "category.jetpack.keys"
+        ));
 
         ClientTickEvents.START_CLIENT_TICK.register(JetpackKeys::onClientTick);
     }
 
     private static void onClientTick(MinecraftClient client) {
+//        if (spaceBinding.wasPressed()) {
+//            client.player.sendMessage(Text.literal("Space!"), false);
+//        }
+
         if (toggleBinding.wasPressed()) {
             toggleJetpackActive(client);
         }
