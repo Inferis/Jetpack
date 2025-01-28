@@ -137,9 +137,11 @@ public class RechargerBlockEntity extends BlockEntity implements @Nullable Named
                 var replaceWithBucket = fuelStack.getItem() instanceof BucketItem;
                 // take a fuel
                 fuelLeft = fuelMax = world.getFuelRegistry().getFuelTicks(fuelStack);
-                fuelStack.decrement(1);
-                if (replaceWithBucket) {
-                    setFuelSlotStack(new ItemStack(Items.BUCKET));
+                if (fuelLeft > 0) {
+                    fuelStack.decrement(1);
+                    if (replaceWithBucket) {
+                        setFuelSlotStack(new ItemStack(Items.BUCKET));
+                    }
                 }
             }
             else {
