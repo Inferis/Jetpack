@@ -8,8 +8,10 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.InventoryChangedListener;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -72,6 +74,10 @@ public class RechargerBlockEntity extends BlockEntity implements @Nullable Named
         return inventory.getStack(1);
     }
 
+    public void setFuelSlotStack(ItemStack stack) {
+        inventory.setStack(1, stack);
+    }
+
     @Override
     public Text getDisplayName() {
         return Text.translatable("screen.jetpack.recharger.title");
@@ -128,9 +134,13 @@ public class RechargerBlockEntity extends BlockEntity implements @Nullable Named
 
         if (fuelLeft == 0) {
             if (hasFuel) {
+                var replaceWithBucket = fuelStack.getItem() instanceof BucketItem;
                 // take a fuel
                 fuelLeft = fuelMax = world.getFuelRegistry().getFuelTicks(fuelStack);
                 fuelStack.decrement(1);
+                if (replaceWithBucket) {
+                    setFuelSlotStack(new ItemStack(Items.BUCKET));
+                }
             }
             else {
                 fuelMax = 0;
