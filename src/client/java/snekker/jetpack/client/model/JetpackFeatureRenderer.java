@@ -10,7 +10,7 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import snekker.jetpack.Jetpack;
-import snekker.jetpack.item.JetpackItem;
+import snekker.jetpack.item.JetpackItems;
 
 public class JetpackFeatureRenderer extends FeatureRenderer<PlayerEntityRenderState, PlayerEntityModel> {
     private final JetpackEntityModel model;
@@ -22,7 +22,7 @@ public class JetpackFeatureRenderer extends FeatureRenderer<PlayerEntityRenderSt
 
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, PlayerEntityRenderState state, float limbAngle, float limbDistance) {
-        if (state.equippedChestStack.getItem() instanceof JetpackItem) {
+        if (state.equippedChestStack.isOf(JetpackItems.JETPACK)) {
             matrices.push();
 
             var jetpackTexture = Jetpack.id("textures/entity/jetpack.png");
