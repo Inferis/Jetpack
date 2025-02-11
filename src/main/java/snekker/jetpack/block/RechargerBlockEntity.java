@@ -26,11 +26,14 @@ import snekker.jetpack.item.JetpackItem;
 import snekker.jetpack.item.JetpackItems;
 import snekker.jetpack.screen.RechargerScreenHandler;
 
+import java.util.Random;
+
 public class RechargerBlockEntity extends BlockEntity implements @Nullable NamedScreenHandlerFactory, InventoryChangedListener {
     public final SimpleInventory inventory;
     public final PropertyDelegate propertyDelegate;
     private int fuelLeft;
     private int fuelMax;
+    static final Random random = new Random();
 
     public RechargerBlockEntity(BlockPos pos, BlockState state) {
         super(JetpackBlockEntityTypes.RECHARGER, pos, state);
@@ -150,9 +153,10 @@ public class RechargerBlockEntity extends BlockEntity implements @Nullable Named
         }
 
         if (fuelLeft > 0) {
-            fuel = Math.clamp(fuel + 2, 0, JetpackItem.MAX_FUEL);
+            var r = random.nextInt(3);
+            fuel = Math.clamp(fuel + 3 + r, 0, JetpackItem.MAX_FUEL);
             jetpackStack.set(JetpackItem.JETPACK_FUEL, fuel);
-            fuelLeft = Math.clamp(fuelLeft - 5, 0, fuelLeft);
+            fuelLeft = Math.clamp(fuelLeft - 4 - r, 0, fuelLeft);
             markDirty();
         }
     }
