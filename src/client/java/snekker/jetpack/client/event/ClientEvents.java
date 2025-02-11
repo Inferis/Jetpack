@@ -47,7 +47,7 @@ public class ClientEvents {
 
                     // get vector that describes our rotation, then move it behind us to
                     // add cloud particles.
-                    var vec = player.getRotationVector();
+                    var vec = player.getRotationVector(0, player.getBodyYaw());
                     var x = player.getX() - vec.getX();
                     var y = player.getY() + 0.5;
                     var z = player.getZ() - vec.getZ();
