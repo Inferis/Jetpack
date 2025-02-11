@@ -58,6 +58,8 @@ public class ClientEvents {
     }
 
     private static void onHudRender(DrawContext drawContext, RenderTickCounter renderTickCounter) {
+        var matrices = drawContext.getMatrices();
+        matrices.push();
         var client = MinecraftClient.getInstance();
         var player = client.player;
         if (player != null) {
@@ -65,8 +67,10 @@ public class ClientEvents {
             var fuel = jetpack.getOrDefault(JetpackItem.JETPACK_FUEL, 0);
             drawContext.drawItem(jetpack, 8, drawContext.getScaledWindowHeight() / 2 - 8);
             if (JetpackItem.getActive(jetpack)) {
-                drawContext.drawText(client.textRenderer, Text.literal(fuel + "/" + JetpackItem.MAX_FUEL), 30, drawContext.getScaledWindowHeight() / 2 - client.textRenderer.fontHeight / 2, 0xffffff, true);
+                matrices.scale(0.5F, 0.5F, 1);
+                drawContext.drawText(client.textRenderer, Text.literal(fuel + "/" + JetpackItem.MAX_FUEL), 54, drawContext.getScaledWindowHeight() - client.textRenderer.fontHeight + 5, 0xffffff, true);
             }
         }
+        matrices.pop();
     }
 }
