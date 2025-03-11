@@ -9,11 +9,14 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import snekker.jetpack.Jetpack;
 import snekker.jetpack.item.JetpackItem;
 import snekker.jetpack.networking.SetJetpackActiveC2SPayload;
+import snekker.jetpack.networking.SetJetpackFuelC2SPayload;
 import snekker.jetpack.util.JetpackUtil;
 
 @Environment(EnvType.CLIENT)
@@ -54,36 +57,57 @@ public class JetpackKeys {
 //            client.player.sendMessage(Text.literal("Space!"), false);
 //        }
 
+        var player = client.player;
+        if (player == null) {
+            return;
+        }
+
         if (toggleBinding.wasPressed()) {
             toggleJetpackActive(client);
         }
 
-        if (client.player != null && !client.player.getAbilities().flying) {
-            var jetpack = JetpackItem.getEquippedJetpack(client.player);
-            if (!jetpack.isEmpty() && jetpack.getOrDefault(JetpackItem.JETPACK_FUEL, 0) > 0) {
-                if (powerBinding.isPressed()) {
-                    JetpackItem.setActive(jetpack, true);
-                    Vec3d vec;
-                    if (client.player.isOnGround()) {
-                        vec = new Vec3d(0, 0.5, 0);
-                    }
-                    else {
-                        vec = client.player.getRotationVector();
-                        vec = vec.add(-vec.x / 3.0 * 2.0, 0.15, -vec.z / 3.0 * 2.0);
-                    }
-                    client.player.setVelocity(vec);
-                    if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
-                        ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(true));
-                    }
-                }
-                else if (JetpackItem.getActive(jetpack)) {
-                    JetpackItem.setActive(jetpack, false);
-                    if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
-                        ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(false));
-                    }
-                }
-            }
+        if (player.isSpectator() || player.isInCreativeMode()) {
+            // we don't want this happening when in creative or spectator
+            return;
         }
+        if (client.world == null) {
+            // just in case
+            return;
+        }
+
+        var jetpackStack = JetpackItem.getEquippedJetpack(player);
+        if (!jetpackStack.isEmpty() && JetpackItem.getActive(jetpackStack)) {
+            var vec = player.getVelocity();
+            player.setVelocity(vec.x, spaceBinding.wasPressed() ? 0.15 : 0, vec.z);
+        }
+
+
+//        if (client.player != null && !client.player.getAbilities().flying) {
+//            var jetpack = JetpackItem.getEquippedJetpack(client.player);
+//            if (!jetpack.isEmpty() && jetpack.getOrDefault(JetpackItem.JETPACK_FUEL, 0) > 0) {
+//                if (powerBinding.isPressed()) {
+//                    JetpackItem.setActive(jetpack, true);
+//                    Vec3d vec;
+//                    if (client.player.isOnGround()) {
+//                        vec = new Vec3d(0, 0.5, 0);
+//                    }
+//                    else {
+//                        vec = client.player.getRotationVector();
+//                        vec = vec.add(-vec.x / 3.0 * 2.0, 0.15, -vec.z / 3.0 * 2.0);
+//                    }
+//                    client.player.setVelocity(vec);
+//                    if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
+//                        ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(true));
+//                    }
+//                }
+//                else if (JetpackItem.getActive(jetpack)) {
+//                    JetpackItem.setActive(jetpack, false);
+//                    if (ClientPlayNetworking.canSend(SetJetpackActiveC2SPayload.ID)) {
+//                        ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(false));
+//                    }
+//                }
+//            }
+//        }
     }
 
     private static void toggleJetpackActive(MinecraftClient client) {

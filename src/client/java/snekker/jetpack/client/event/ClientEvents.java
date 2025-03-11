@@ -9,7 +9,6 @@ import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.text.Text;
 import snekker.jetpack.Jetpack;
-import snekker.jetpack.client.JetpackClient;
 import snekker.jetpack.item.JetpackItem;
 import snekker.jetpack.networking.SetJetpackActiveC2SPayload;
 import snekker.jetpack.networking.SetJetpackFuelC2SPayload;
@@ -44,14 +43,16 @@ public class ClientEvents {
                         JetpackUtil.setFlying(player,false);
                         ClientPlayNetworking.send(new SetJetpackActiveC2SPayload(false));
                     }
+                    else {
+                        // get vector that describes our rotation, then move it behind us to
+                        // add cloud particles.
+                        var vec = player.getRotationVector(0, player.getBodyYaw());
+                        var x = player.getX() - vec.getX();
+                        var y = player.getY() + 0.5;
+                        var z = player.getZ() - vec.getZ();
+                        minecraftClient.world.addParticle(ParticleTypes.CLOUD, x, y, z, 0, -0.05, 0);
 
-                    // get vector that describes our rotation, then move it behind us to
-                    // add cloud particles.
-                    var vec = player.getRotationVector(0, player.getBodyYaw());
-                    var x = player.getX() - vec.getX();
-                    var y = player.getY() + 0.5;
-                    var z = player.getZ() - vec.getZ();
-                    minecraftClient.world.addParticle(ParticleTypes.CLOUD, x, y, z, 0, -0.05, 0);
+                    }
                 }
             }
         }
