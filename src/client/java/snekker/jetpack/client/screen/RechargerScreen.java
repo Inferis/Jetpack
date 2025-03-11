@@ -7,7 +7,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
 import snekker.jetpack.Jetpack;
 import snekker.jetpack.screen.RechargerScreenHandler;
 
