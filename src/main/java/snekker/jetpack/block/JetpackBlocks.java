@@ -29,7 +29,7 @@ public class JetpackBlocks {
 
     public static void registerBlocks() {
         RECHARGER = registerBlock("recharger", key -> {
-            return new RechargerBlock(AbstractBlock.Settings.copy(Blocks.STONE).registryKey(key));
+            return new RechargerBlock(AbstractBlock.Settings.copy(Blocks.REPEATER).registryKey(key));
         });
     }
 }
