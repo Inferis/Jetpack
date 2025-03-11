@@ -45,7 +45,7 @@ public class JetpackItem extends ArmorItem {
         super(JETPACK_MATERIAL, EquipmentType.CHESTPLATE, settings
                 .maxCount(1)
                 .equippable(EquipmentSlot.CHEST)
-                .component(JETPACK_FUEL, MAX_FUEL)
+                .component(JETPACK_FUEL, 0)
         );
     }
 
