@@ -14,24 +14,4 @@ public class JetpackSlot extends Slot {
     public boolean canInsert(ItemStack stack) {
         return stack.isOf(JetpackItems.JETPACK);
     }
-
-    @Override
-    public void onQuickTransfer(ItemStack newItem, ItemStack original) {
-        super.onQuickTransfer(newItem, original);
-    }
-
-    @Override
-    protected void onCrafted(ItemStack stack) {
-        super.onCrafted(stack);
-    }
-
-    @Override
-    protected void onCrafted(ItemStack stack, int amount) {
-        super.onCrafted(stack, amount);
-    }
-
-    @Override
-    protected void onTake(int amount) {
-        super.onTake(amount);
-    }
 }
