@@ -28,7 +28,7 @@ import snekker.jetpack.screen.RechargerScreenHandler;
 
 import java.util.Random;
 
-public class RechargerBlockEntity extends BlockEntity implements @Nullable NamedScreenHandlerFactory, InventoryChangedListener {
+public class RechargerBlockEntity extends BlockEntity implements NamedScreenHandlerFactory, InventoryChangedListener {
     public final SimpleInventory inventory;
     public final PropertyDelegate propertyDelegate;
     private int fuelLeft;
