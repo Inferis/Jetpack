@@ -9,12 +9,15 @@ import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.SimpleInventory;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -27,13 +30,16 @@ public class RechargerBlock extends Block implements BlockEntityProvider, BlockE
 
     public RechargerBlock(Settings settings) {
         super(settings);
-        setDefaultState(getDefaultState().with(HAS_JETPACK, false));
+        setDefaultState(getDefaultState()
+                .with(HAS_JETPACK, false)
+                .with(Properties.HORIZONTAL_FACING, Direction.NORTH));
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(HAS_JETPACK);
+        builder.add(Properties.HORIZONTAL_FACING);
     }
 
     @Override
@@ -44,6 +50,11 @@ public class RechargerBlock extends Block implements BlockEntityProvider, BlockE
     @Override
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
+    }
+
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        return super.getPlacementState(ctx).with(Properties.HORIZONTAL_FACING, ctx.getHorizontalPlayerFacing().getOpposite());
     }
 
     @Override
